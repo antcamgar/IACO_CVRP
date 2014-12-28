@@ -1,9 +1,7 @@
-import Sets.Set
-
 class IacoProblem(object):
     
 
-    def __init__(self, alpha, beta, d, k, n, q0, rho, tau0):
+    def __init__(self, alpha, beta, d, k, nodes, q0, rho, tau0):
 
         if (rho <= 0 or rho > 1
         	or q0 < 0 or q0 > 1):
@@ -15,14 +13,14 @@ class IacoProblem(object):
         	self.alpha = alpha
             self.ants = dict()
             for x in range(k):
-                self.ants["ant"+str(x)] = Ant(x,Set())
+                self.ants["ant" + str(x)] = Ant(x,set())
         	self.beta = beta
             self.distances_table = d
             self.nodes = n
             self.pheromone_table = list()
             for i in range(len(distances_table)):
                 for j in range(len(distances_table[0])):
-                    if j!=i:
+                    if j != i:
                         pheromone_table[i][j] = tau0
                     else:
                         pheromone_table[i][j] = 0.0
@@ -30,21 +28,22 @@ class IacoProblem(object):
         	self.rho = rho
         	self.tau0 = tau0
 
-    def construct_route(self):
+    def construct_route(self): 
 
         
     def local_search(self):
 
     
     def mutation(self):
+
         
     def node_probability(self, i, j, ant):
         
         if j in ant.tabu:
             return 0.0
         else:
-            return (pheromone_table[i][j]**alpha)*(distances_table[i][j]**beta)/(
-                sum[(pheromone_table[i][h]**alpha)*(distances_table[i][h]**beta) 
+            return (pheromone_table[i][j] ** alpha) * (distances_table[i][j] ** beta) / (
+                sum[(pheromone_table[i][h] ** alpha) * (distances_table[i][h] ** beta) 
                     for h in range(n) if not h in ant.tabu])
 
 
