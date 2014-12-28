@@ -1,0 +1,15 @@
+Modelado de las hormigas:
+
+La clase hormiga tendrá los siguientes atributos:
+	- ant_id: identificador de la hormiga
+	- tabu: lista tabu de nodos que no puede visitar.
+	- actual_node: nodo en el que actualmente está.
+	- visit_order: lista con las aristas visitadas por la hormiga en orden
+			de visita.
+
+Acciones de la hormiga:
+
+	- tirar ruleta (para conseguir probabilidad)
+	- avanza a un nodo
+	- deposita feromona
+
