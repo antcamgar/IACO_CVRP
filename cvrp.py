@@ -1,6 +1,7 @@
 class Cvrp(IacoProblem):
 	"""Capacity Vehicle Routing Problem Class"""
-	def __init__(self, customers, lengths, vehicles, vehicle_capacity):
+	def __init__(self, customers, lengths, vehicles, vehicle_capacity,
+		alpha, beta, q0, rho, tau0):
 
 		# Restrictions:
 		# - The number of vehicles must be lesser than the number of customers.
@@ -17,13 +18,11 @@ class Cvrp(IacoProblem):
 			print("There is no solution for that problem with these arguments.")
 
 		else:
-
+			super(Cvrp, self).__init__()
 			self.customers = customers
 			self.lengths = lengths
 			self.vehicles = vehicles
 			self.vehicle_capacity = vehicle_capacity
-
-
-	def resolve(self):
-
-		# Resolver el problema mediante el algoritmo IACO
+	
+	
+	

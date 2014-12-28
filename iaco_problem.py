@@ -11,7 +11,7 @@ class IacoProblem(object):
         if (rho <= 0 or rho > 1
         	or q0 < 0 or q0 > 1):
 
-        	print("Wrong range of arguments.")
+        	print("Wrong range of arguments for IACO algorithm.")
 
         else:
 
@@ -21,4 +21,12 @@ class IacoProblem(object):
         	self.rho = rho
         	self.tau0 = tau0
 
+        
+    def local_search(self):
+        
+    
+    def mutation(self):
+        
+
+    def update_pheromone(self):
         
