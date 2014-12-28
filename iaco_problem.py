@@ -17,7 +17,7 @@ class IacoProblem(object):
         	self.beta = beta
             self.distances_table = d
             self.nodes = n
-            self.pheromone_table = list()
+            self.pheromone_table = d
             for i in range(len(distances_table)):
                 for j in range(len(distances_table[0])):
                     if j != i:
@@ -29,13 +29,13 @@ class IacoProblem(object):
         	self.tau0 = tau0
 
     def construct_route(self): 
-
+        pass
         
     def local_search(self):
-
+        pass
     
     def mutation(self):
-
+        pass
         
     def node_probability(self, i, j, ant):
         
@@ -48,4 +48,4 @@ class IacoProblem(object):
 
 
     def update_pheromone(self):
-        
+        pass
