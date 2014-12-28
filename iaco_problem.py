@@ -1,4 +1,3 @@
-
 class IacoProblem():
     
 
@@ -12,9 +11,9 @@ class IacoProblem():
         else:
 
         	self.alpha = alpha
-            self.ants = list()
-            for ant_id in range(n_ants):
-                self.ants. = Ant(ant_id)
+            self.ants = dict()
+            for x in range(k):
+                self.ants["ant" + str(x)] = Ant(x,set())
         	self.beta = beta
             self.distances_table = matrix_distances
             self.nodes = nodes
@@ -29,20 +28,23 @@ class IacoProblem():
         	self.rho = rho
         	self.tau0 = tau0
 
-    def construct_route(self):
+    def construct_route(self): 
 
         
     def local_search(self):
 
     
     def mutation(self):
+
         
     def node_probability(self, i, j, ant):
         
         if j in ant.tabu:
             return 0.0
         else:
-
+            return (pheromone_table[i][j] ** alpha) * (distances_table[i][j] ** beta) / (
+                sum[(pheromone_table[i][h] ** alpha) * (distances_table[i][h] ** beta) 
+                    for h in range(n) if not h in ant.tabu])
 
 
     def update_pheromone(self):
