@@ -1,4 +1,4 @@
-class Cvrp(object):
+class Cvrp(IacoProblem):
 	"""Capacity Vehicle Routing Problem Class"""
 	def __init__(self, customers, lengths, vehicles, vehicle_capacity):
 
@@ -22,3 +22,8 @@ class Cvrp(object):
 			self.lengths = lengths
 			self.vehicles = vehicles
 			self.vehicle_capacity = vehicle_capacity
+
+
+	def resolve(self):
+
+		# Resolver el problema mediante el algoritmo IACO
