@@ -1,7 +1,7 @@
-class IacoProblem(object):
+class IacoProblem():
     
 
-    def __init__(self, alpha, beta, d, k, nodes, q0, rho, tau0):
+    def __init__(self, alpha, beta, matrix_distances, n_ants, nodes, q0, rho, tau0):
 
         if (rho <= 0 or rho > 1
         	or q0 < 0 or q0 > 1):
@@ -15,9 +15,9 @@ class IacoProblem(object):
             for x in range(k):
                 self.ants["ant" + str(x)] = Ant(x,set())
         	self.beta = beta
-            self.distances_table = d
-            self.nodes = n
-            self.pheromone_table = d
+            self.distances_table = matrix_distances
+            self.nodes = nodes
+            self.pheromone_table = matrix_distances
             for i in range(len(distances_table)):
                 for j in range(len(distances_table[0])):
                     if j != i:
