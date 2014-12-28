@@ -8,21 +8,23 @@ class Cvrp(IacoProblem):
 		# - The number of vehicles multiplied by its capacity must be higher
 		#	than the total quantity of customers goods.
 		# - There must be a deposit.
-		# - There must be at least one vehicle.	
+		# - There must be at least one vehicle.
+		# - The initial pheromone can't be out of the pheromone range.
+		tau_range = sum([x for x in lengths[0]])
+		total_customers_quantity = [c.quantity for c in customers]
 		if (vehicles > len(customers) 
-			or vehicles*vehicle_capacity < sum([c.quantity for c in customers]) 
-			or [c.quantity for c in customers].count(0)!=1
-			or vehicles < 1):
+			or vehicles*vehicle_capacity < sum(total_customers_quantity) 
+			or total_customers_quantity.count(0)!=1
+			or vehicles < 1
+			or tau0 < vehicle_capacity/(2*tau_range)
+			or tau0 > vehicle_capacity/tau_range):
 			
 			# The problem can't be solved with these arguments.
 			print("There is no solution for that problem with these arguments.")
 
 		else:
-			super(Cvrp, self).__init__()
+			super(Cvrp, self).__init__(alpha,beta,q0,rho,tau0)
 			self.customers = customers
 			self.lengths = lengths
 			self.vehicles = vehicles
 			self.vehicle_capacity = vehicle_capacity
-	
-	
-	
