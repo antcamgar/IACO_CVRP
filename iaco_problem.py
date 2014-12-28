@@ -1,4 +1,4 @@
-
+import Sets.Set
 
 class IacoProblem(object):
     
@@ -15,10 +15,17 @@ class IacoProblem(object):
         	self.alpha = alpha
             self.ants = dict()
             for x in range(k):
-                self.ants["ant"+str(x)] = Ant(x,[])
+                self.ants["ant"+str(x)] = Ant(x,Set())
         	self.beta = beta
-            self.distances = d
+            self.distances_table = d
             self.nodes = n
+            self.pheromone_table = list()
+            for i in range(len(distances_table)):
+                for j in range(len(distances_table[0])):
+                    if j!=i:
+                        pheromone_table[i][j] = tau0
+                    else:
+                        pheromone_table[i][j] = 0.0
         	self.q0 = q0
         	self.rho = rho
         	self.tau0 = tau0
@@ -31,15 +38,13 @@ class IacoProblem(object):
     
     def mutation(self):
         
-    def node_probability(self, i, j):
+    def node_probability(self, i, j, ant):
+        
+        if j in ant.tabu:
+            return 0.0
+        else:
 
-        # Comprobar si el nodo j está en la lista tabú general
-        # si -> return 0 (probabilidad 0)
-        # no
-        # |
-        # --> Comprobar si está en la tabla tabú de la hormiga
-        #       si -> return 0 (probabilidad 0)
-        #       no -> calcular la probabilidad con la formula del paper
+
 
     def update_pheromone(self):
         
