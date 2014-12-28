@@ -9,15 +9,14 @@ class IacoProblem():
         	print("Wrong range of arguments for IACO algorithm.")
 
         else:
-
-        	self.alpha = alpha
+            self.alpha = alpha
             self.ants = dict()
             for x in range(k):
                 self.ants["ant" + str(x)] = Ant(x,set())
         	self.beta = beta
             self.distances_table = matrix_distances
             self.nodes = nodes
-            self.pheromone_table = list()
+            self.pheromone_table = distances_table
             for i in range(len(distances_table)):
                 for j in range(len(distances_table[0])):
                     if j != i:

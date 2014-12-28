@@ -1,4 +1,4 @@
-class Customer(object):
+class Customer():
 	"""Customer class for CVRP"""
 	def __init__(self, q):
 
