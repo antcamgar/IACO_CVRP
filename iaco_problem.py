@@ -43,7 +43,9 @@ class IacoProblem(object):
         if j in ant.tabu:
             return 0.0
         else:
-
+            return (pheromone_table[i][j]**alpha)*(distances_table[i][j]**beta)/(
+                sum[(pheromone_table[i][h]**alpha)*(distances_table[i][h]**beta) 
+                    for h in range(n) if not h in ant.tabu])
 
 
     def update_pheromone(self):
