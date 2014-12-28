@@ -13,9 +13,11 @@ class IacoProblem(object):
         else:
 
         	self.alpha = alpha
+            self.ants = dict()
+            for x in range(k):
+                self.ants["ant"+str(x)] = Ant(x,[])
         	self.beta = beta
             self.distances = d
-            self.k = k
             self.nodes = n
         	self.q0 = q0
         	self.rho = rho
