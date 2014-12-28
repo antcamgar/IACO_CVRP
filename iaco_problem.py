@@ -1,9 +1,8 @@
-import Sets.Set
 
-class IacoProblem(object):
+class IacoProblem():
     
 
-    def __init__(self, alpha, beta, d, k, n, q0, rho, tau0):
+    def __init__(self, alpha, beta, matrix_distances, n_ants, nodes, q0, rho, tau0):
 
         if (rho <= 0 or rho > 1
         	or q0 < 0 or q0 > 1):
@@ -13,16 +12,16 @@ class IacoProblem(object):
         else:
 
         	self.alpha = alpha
-            self.ants = dict()
-            for x in range(k):
-                self.ants["ant"+str(x)] = Ant(x,Set())
+            self.ants = list()
+            for ant_id in range(n_ants):
+                self.ants. = Ant(ant_id)
         	self.beta = beta
-            self.distances_table = d
-            self.nodes = n
+            self.distances_table = matrix_distances
+            self.nodes = nodes
             self.pheromone_table = list()
             for i in range(len(distances_table)):
                 for j in range(len(distances_table[0])):
-                    if j!=i:
+                    if j != i:
                         pheromone_table[i][j] = tau0
                     else:
                         pheromone_table[i][j] = 0.0
