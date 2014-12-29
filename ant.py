@@ -9,13 +9,6 @@ class Ant(object):
 		self.current_node = current_node
 		self.visit_order = list()
 
-    def __str__(self):
-    	str_ant = "Ant id: " + str(self.ant_id) + "\n"
-        str_ant += "Current node: " + str(self.current_node) + "\n"
-        str_ant += "Tabu list: " + str(self.tabu)
-
-        return str_ant
-
     def nodes_probability(self, weighted_graph):
     	"""
     	Returns a dictionary with the probability of moving to each node.
@@ -50,7 +43,7 @@ class Ant(object):
     	ant_probability = random.random()
     	probability_values = cumulative_probability_dict.values()
     	
-    	return max(filter(lambda x: x < ant_probability))
+    	return max(filter(lambda x: x < ant_probability,probability_values))
 
     def update_ant(self, next_node):
     	"""
@@ -59,3 +52,10 @@ class Ant(object):
     	self.tabu.add(next_node)
     	self.visit_order.append((self.current_node,next_node))
     	self.current_node(next_node)
+
+    def __str__(self):
+    	str_ant = "Ant id: " + str(self.ant_id) + "\n"
+        str_ant += "Current node: " + str(self.current_node) + "\n"
+        str_ant += "Tabu list: " + str(self.tabu)
+
+        return str_ant
