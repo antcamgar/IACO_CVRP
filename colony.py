@@ -12,4 +12,3 @@ class Colony():
         str_col += "Number of ants: " + str(len(self.ants)) + "\n"
         for str_ant in map(lambda ant: str(ant),self.ants):
             str_col += str_ant
-
