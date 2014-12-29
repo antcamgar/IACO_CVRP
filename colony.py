@@ -14,4 +14,3 @@ class Colony(object):
         for str_ant in map(lambda ant: str(ant),self.ants):
             str_col += str_ant
         return str_col
-

@@ -12,4 +12,3 @@ Acciones de la hormiga:
 	- tirar ruleta (para conseguir probabilidad)
 	- avanza a un nodo
 	- deposita feromona
-
