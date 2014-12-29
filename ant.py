@@ -3,59 +3,79 @@ import random
 class Ant(object):
 	"""Ant class for IACO"""
 	
-	def __init__(self, ant_id, current_node, tabu=set()):
+	def __init__(self, ant_id, initial_node, my_colony_id,tabu=set()):
         self.ant_id = ant_id
 		self.tabu = tabu
-		self.current_node = current_node
-		self.visit_order = list()
+		self.current_node = initial_node
+        self.my_colony_id = my_colony_id
+		self.visited_nodes = list()
 
-    def nodes_probability(self, weighted_graph):
+    def get_decision_table(self, weighted_graph, global_tabu):
     	"""
-    	Returns a dictionary with the probability of moving to each node.
+        Returns the decision table of this ant.
     	"""
-    	results = dict() #Poner en la clave i o no?
-    	i = self.current_node
-    	
-    	for neighbor in weighted_graph.neighbors(i):
-    		j = neighbor
-    		if j in self.tabu:
-    			results[j] = 0.0
-    		else:
-    			results[j] = (weighted_graph[i][j]['weight'] ** alpha) * (weighted_graph[i][j]['pheromone'] ** beta) / (
-                sum[(weighted_graph[i][h]['weight'] ** alpha) * (weighted_graph[i][h]['pheromone'] ** beta) 
-                    for h in range(n) if not h in ant.tabu])
+    	decision_table = dict()
+        node_neighbors = weighted_graph.neighbors(self.current_node)
+        promising_neighbors = list()
+        #losers_neighbors = list() #this list is not necessary prob 0.0!!!It's like losers were gone
 
-    	return results
+        for node in node_neighbors:
+            if not node in self.tabu and not node in global_tabu:
+                promising_neighbors.append(node)
+        
+        acum = 0.0
+        for h in promising_neighbors:
+            edge_current_node_to_h = weighted_graph[self.current_node][h]
+            tau_ih = edge_current_node_to_h['pheromone']
+            eta_ih = 1.0 / edge_current_node_to_h['weight'] 
+            acum += tau_ih**alpha * eta_ih**beta
 
-    def select_next_node(self, probability_dict):
+    	for next_node in promising_neighbors:
+            decision_table[next_node] = decision_making_formula(acum, next_node, tau_ij, eta_ij, alpha, beta)
+
+        return decision_table
+
+    def select_next_node(self, nodes_probabilities):
     	"""
-    	Returns the ant probability choice of its neighbors.
+    	Returns the next node chosen by this ant according to nodes_probability and 
+        "weighted lucky wheel method". Obviously, the higher probability of node j is, the higher 
+        probability of this ant selects node j.
     	"""
     	cumulative_probability = 0.0
-    	cumulative_probability_dict = dict()
+        rand_number = random.random()  # This ant spins the wheel
 
-    	for node,probability in probability_dict.items():
-
-    		if probability > 0.0:
-    			cumulative_probability += probability
-    			cumulative_probability_dict[node] = cumulative_probability
-
-    	ant_probability = random.random()
-    	probability_values = cumulative_probability_dict.values()
-    	
-    	return max(filter(lambda x: x < ant_probability,probability_values))
+        for node,probability in nodes_probabilities.iteritems():
+            cumulative_probability += probability
+            if cumulative_probability >= rand_number:
+                return node
 
     def update_ant(self, next_node):
-    	"""
-    	Update the ant current_node, tabu set and visit_order
+    	"""Update the ant current_node, tabu set and visited_nodes
     	"""
     	self.tabu.add(next_node)
-    	self.visit_order.append((self.current_node,next_node))
-    	self.current_node(next_node)
+    	self.visited_nodes.append((self.current_node,next_node))
+    	self.current_node = next_node
+
+    def decision_making_formula(self, acum, next_node, tau_ij, eta_ij,alpha, beta, global_tabu=set()):
+        """This method computes decision making formula.
+
+        This formula will be used by this ant to make a stochastic decision.
+        
+        Args:
+            acum: precomputed sum of the total influence of every promising neighbor
+            tau_ij: pheromone density of edge ij
+            eta_ij: inverse of weight/cost associated with ij edge
+            alpha: this parameter controls the influence of pheromone over the final decision.
+            beta: this parameter controls the influence of cost over the final decision.
+
+        Returns:
+            The probability of next node chosen by this ant is j.
+        """
+        return (tau_ij**alpha * eta_ij**beta) / (acum * 1.0)
 
     def __str__(self):
     	str_ant = "Ant id: " + str(self.ant_id) + "\n"
         str_ant += "Current node: " + str(self.current_node) + "\n"
         str_ant += "Tabu list: " + str(self.tabu)
-
+        
         return str_ant
