@@ -23,15 +23,15 @@ class Ant(object):
             if not node in self.tabu and not node in global_tabu:
                 promising_neighbors.append(node)
         
-        acum = 0.0
+        acum = 0.0  #acum is equal to total influence of every promising neighbor
         node_tau_eta = dict()
         for h in promising_neighbors:
             edge_current_node_to_h = weighted_graph[self.current_node][h]
             tau_ih = edge_current_node_to_h['pheromone']
             eta_ih = 1.0 / edge_current_node_to_h['weight']
-            temp = tau_ih**alpha * eta_ih**beta
-            node_tau_eta[h] = temp
-            acum += temp
+            influence = tau_ih**alpha * eta_ih**beta
+            node_tau_eta[h] = influence
+            acum += influence
 
     	for next_node,influence in node_tau_eta.iteritems():
             #influence here is equal to tau_ij**alpha * eta_ij**beta on the paper
