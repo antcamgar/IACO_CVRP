@@ -10,7 +10,7 @@ class Ant(object):
 		self.visit_order = list()
 
     def __str__(self):
-        str_ant = "Ant id: " + str(self.ant_id) + "\n"
+    	str_ant = "Ant id: " + str(self.ant_id) + "\n"
         str_ant += "Current node: " + str(self.current_node) + "\n"
         str_ant += "Tabu list: " + str(self.tabu)
 
@@ -36,7 +36,7 @@ class Ant(object):
 
     def select_next_node(self, probability_dict):
     	"""
-    	Returns the choice ...
+    	Returns the ant probability choice of its neighbors.
     	"""
     	cumulative_probability = 0.0
     	cumulative_probability_dict = dict()
