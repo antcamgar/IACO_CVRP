@@ -24,14 +24,18 @@ class Ant(object):
                 promising_neighbors.append(node)
         
         acum = 0.0
+        node_tau_eta = dict()
         for h in promising_neighbors:
             edge_current_node_to_h = weighted_graph[self.current_node][h]
             tau_ih = edge_current_node_to_h['pheromone']
-            eta_ih = 1.0 / edge_current_node_to_h['weight'] 
-            acum += tau_ih**alpha * eta_ih**beta
+            eta_ih = 1.0 / edge_current_node_to_h['weight']
+            temp = tau_ih**alpha * eta_ih**beta
+            node_tau_eta[h] = temp
+            acum += temp
 
-    	for next_node in promising_neighbors:
-            decision_table[next_node] = decision_making_formula(acum, next_node, tau_ij, eta_ij, alpha, beta)
+    	for next_node,influence in node_tau_eta.iteritems():
+            #influence here is equal to tau_ij**alpha * eta_ij**beta on the paper
+            decision_table[next_node] = (influence * 1.0) / acum
 
         return decision_table
 
@@ -55,23 +59,6 @@ class Ant(object):
     	self.tabu.add(next_node)
     	self.visited_nodes.append((self.current_node,next_node))
     	self.current_node = next_node
-
-    def decision_making_formula(self, acum, next_node, tau_ij, eta_ij,alpha, beta, global_tabu=set()):
-        """This method computes decision making formula.
-
-        This formula will be used by this ant to make a stochastic decision.
-        
-        Args:
-            acum: precomputed sum of the total influence of every promising neighbor
-            tau_ij: pheromone density of edge ij
-            eta_ij: inverse of weight/cost associated with ij edge
-            alpha: this parameter controls the influence of pheromone over the final decision.
-            beta: this parameter controls the influence of cost over the final decision.
-
-        Returns:
-            The probability of next node chosen by this ant is j.
-        """
-        return (tau_ij**alpha * eta_ij**beta) / (acum * 1.0)
 
     def __str__(self):
     	str_ant = "Ant id: " + str(self.ant_id) + "\n"
